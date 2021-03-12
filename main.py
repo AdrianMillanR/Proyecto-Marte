@@ -53,6 +53,7 @@ robot4.goto(-200, 200)
 robot4.pendown()
 r4 = Agente(robot4, "explorando")
 
+
 def iniciar_componentes():
     planeta.bgcolor("black")
     planeta.setup(width=420, height=420)
@@ -114,7 +115,7 @@ def iniciar_componentes():
     crearobstaculo(-180, -60)
     crearobstaculo(-160, -40)
 
-    turtle.title('Exploración en Marte')
+    #turtle.title('Exploración en Marte')
 
 
 def crearobstaculo(x, y):
@@ -147,137 +148,136 @@ zonas_conocidas_general.append(z)
 
 
 # definimos funciones para el movimiento
-def arriba(robot, zonas_conocidas):
+def arriba(robot):
     y = robot.objeto.ycor()
     robot.objeto.sety(y + 20)
     # validamos que no haya recurso en la nueva posicion
-    for i in recursos:
+    for resource in recursos:
         # si sí hay recurso lo llevamos a la nave
-        if robot.objeto.distance(i.objeto) < 20:
+        if robot.objeto.distance(resource.objeto) < 20:
             robot.estado = "llevando recurso"
-            robot.establecer_recurso(i)
+            robot.establecer_recurso(resource)
 
 
-def derecha(robot, zonas_conocidas):
+def derecha(robot):
     x = robot.objeto.xcor()
     robot.objeto.setx(x + 20)
-    for i in recursos:
-        if robot.objeto.distance(i.objeto) < 20:
+    for resource in recursos:
+        if robot.objeto.distance(resource.objeto) < 20:
             robot.estado = "llevando recurso"
-            robot.establecer_recurso(i)
+            robot.establecer_recurso(resource)
 
 
-def abajo(robot, zonas_conocidas):
+def abajo(robot):
     y = robot.objeto.ycor()
     robot.objeto.sety(y - 20)
-    for i in recursos:
-        if robot.objeto.distance(i.objeto) < 20:
+    for resource in recursos:
+        if robot.objeto.distance(resource.objeto) < 20:
             robot.estado = "llevando recurso"
-            robot.establecer_recurso(i)
+            robot.establecer_recurso(resource)
 
 
-def izquierda(robot, zonas_conocidas):
+def izquierda(robot):
     x = robot.objeto.xcor()
     robot.objeto.setx(x - 20)
-    for i in recursos:
-        if robot.objeto.distance(i.objeto) < 20:
+    for resource in recursos:
+        if robot.objeto.distance(resource.objeto) < 20:
             robot.estado = "llevando recurso"
-            robot.establecer_recurso(i)
+            robot.establecer_recurso(resource)
 
 
 # definimos funciones para comprobar que podemos movernos hacia los lados
 def comprobar_arriba(x, y, zonas_conocidas):
     y += 20
-    bandera = True
-    # validamos que no sea una zona ya explorada o que haya un obstaculo o que se salga del mapa
-    for i in zonas_conocidas:
-        if i.coordenadax == x and i.coordenaday == y:
-            bandera = False
-    for i in obstaculos:
-        if i.coordenadax == x and i.coordenaday == y:
-            bandera = False
+    flag = True
+    for knowArea in zonas_conocidas:
+        if knowArea.coordenadax == x and knowArea.coordenaday == y:
+            flag = False
+    for obstacle in obstaculos:
+        if obstacle.coordenadax == x and obstacle.coordenaday == y:
+            flag = False
     if y > 200:
-        bandera = False
-    return bandera
+        flag = False
+    return flag
 
 
 def comprobar_abajo(x, y, zonas_conocidas):
     y -= 20
-    bandera = True
-    for i in zonas_conocidas:
-        if i.coordenadax == x and i.coordenaday == y:
-            bandera = False
-    for i in obstaculos:
-        if i.coordenadax == x and i.coordenaday == y:
-            bandera = False
+    flag = True
+    for knowArea in zonas_conocidas:
+        if knowArea.coordenadax == x and knowArea.coordenaday == y:
+            flag = False
+    for obstacle in obstaculos:
+        if obstacle.coordenadax == x and obstacle.coordenaday == y:
+            flag = False
     if y < (-200):
-        bandera = False
-    return bandera
+        flag = False
+    return flag
 
 
 def comprobar_izquierda(x, y, zonas_conocidas):
     x -= 20
-    bandera = True
-    for i in zonas_conocidas:
-        if i.coordenadax == x and i.coordenaday == y:
-            bandera = False
-    for i in obstaculos:
-        if i.coordenadax == x and i.coordenaday == y:
-            bandera = False
+    flag = True
+    for knowArea in zonas_conocidas:
+        if knowArea.coordenadax == x and knowArea.coordenaday == y:
+            flag = False
+    for obstacle in obstaculos:
+        if obstacle.coordenadax == x and obstacle.coordenaday == y:
+            flag = False
     if x < (-200):
-        bandera = False
-    return bandera
+        flag = False
+    return flag
 
 
 def comprobar_derecha(x, y, zonas_conocidas):
     x += 20
-    bandera = True
-    for i in zonas_conocidas:
-        if i.coordenadax == x and i.coordenaday == y:
-            bandera = False
-    for i in obstaculos:
-        if i.coordenadax == x and i.coordenaday == y:
-            bandera = False
+    flag = True
+    for knowArea in zonas_conocidas:
+        if knowArea.coordenadax == x and knowArea.coordenaday == y:
+            flag = False
+    for obstacle in obstaculos:
+        if obstacle.coordenadax == x and obstacle.coordenaday == y:
+            flag = False
     if x > 200:
-        bandera = False
-    return bandera
+        flag = False
+    return flag
 
 
 # validamos especificamente si hay obstaculos alrededor
 def obstaculo_arriba(x, y):
     y += 20
-    bandera = True
-    for i in obstaculos:
-        if i.coordenadax == x and i.coordenaday == y:
-            bandera = False
-    return bandera
+    flag = True
+    for obstacle in obstaculos:
+        if obstacle.coordenadax == x and obstacle.coordenaday == y:
+            flag = False
+    return flag
 
 
 def obstaculo_abajo(x, y):
     y -= 20
-    bandera = True
-    for i in obstaculos:
-        if i.coordenadax == x and i.coordenaday == y:
-            bandera = False
-    return bandera
+    flag = True
+    for obstacle in obstaculos:
+        if obstacle.coordenadax == x and obstacle.coordenaday == y:
+            flag = False
+    return flag
 
 
 def obstaculo_izquierda(x, y):
     x -= 20
-    bandera = True
-    for i in obstaculos:
-        if i.coordenadax == x and i.coordenaday == y:
-            bandera = False
-    return bandera
+    flag = True
+    for obstacle in obstaculos:
+        if obstacle.coordenadax == x and obstacle.coordenaday == y:
+            flag = False
+    return flag
 
 
 def obstaculo_derecha(x, y):
     x += 20
-    bandera = True
-    for i in obstaculos:
-        if i.coordenadax == x and i.coordenaday == y:
-            bandera = False
-    return bandera
+    flag = True
+    for obstacle in obstaculos:
+        if obstacle.coordenadax == x and obstacle.coordenaday == y:
+            flag = False
+    return flag
 
 
 # definimos función de exploración
@@ -285,7 +285,7 @@ def explorar(robot, zonas_conocidas):
     aleatorio = random.randrange(4)
     x = robot.objeto.xcor()
     y = robot.objeto.ycor()
-    bandera = False
+    flag = False
     # comprobamos movimientos y guardamos el resultado en variables
     zona_arriba = comprobar_arriba(x, y, zonas_conocidas_general)
     zona_abajo = comprobar_abajo(x, y, zonas_conocidas_general)
@@ -297,29 +297,29 @@ def explorar(robot, zonas_conocidas):
     obstaculo_izq = obstaculo_izquierda(x, y)
     obstaculo_der = obstaculo_derecha(x, y)
     # si no se puede mover se rompe la regla de "no pasar por zonas conocidas"
-    if zona_abajo == False and zona_arriba == False and zona_derecha == False and zona_izquierda == False:
+    if not zona_abajo and not zona_arriba and not zona_derecha and not zona_izquierda:
         zona_abajo = True
         zona_arriba = True
         zona_derecha = True
         zona_izquierda = True
 
     if aleatorio == 0 and y < 199 and zona_arriba and obstaculo_arr:
-        arriba(robot, zonas_conocidas)
-        bandera = True
+        arriba(robot)
+        flag = True
     if aleatorio == 1 and y > (-199) and zona_abajo and obstaculo_aba:
-        abajo(robot, zonas_conocidas)
-        bandera = True
+        abajo(robot)
+        flag = True
     if aleatorio == 2 and x > (-199) and zona_izquierda and obstaculo_izq:
-        izquierda(robot, zonas_conocidas)
-        bandera = True
+        izquierda(robot)
+        flag = True
     if aleatorio == 3 and x < 199 and zona_derecha and obstaculo_der:
-        derecha(robot, zonas_conocidas)
-        bandera = True
+        derecha(robot)
+        flag = True
         # si se movió termina el turno y se guarda la nueva zona conocida
-    if bandera:
-        z = Zona(robot.objeto.xcor(), robot.objeto.ycor())
-        zonas_conocidas.append(z)
-        zonas_conocidas_general.append(z)
+    if flag:
+        zone = Zona(robot.objeto.xcor(), robot.objeto.ycor())
+        zonas_conocidas.append(zone)
+        zonas_conocidas_general.append(zone)
         time.sleep(0.3)
         # de lo contrario se vuelve a mover
     else:
@@ -328,24 +328,24 @@ def explorar(robot, zonas_conocidas):
 
 iniciar_componentes()
 time.sleep(2)
-while nave.unidades < 25:
+while nave.unidades < 6:
     print("agente 1 (blanco),   estado: " + r1.estado)
     print("agente 2 (naranja),  estado: " + r2.estado)
     print("agente 3 (verde),    estado: " + r3.estado)
     print("agente 4 (amarillo), estado: " + r4.estado)
     print("nave (azul), unidades: " + str(nave.unidades))
     if r1.estado == "llevando recurso":
-        r1.llevar_recurso(zonas_conocidas1, recursos,nave)
+        r1.llevar_recurso(zonas_conocidas1, recursos, nave)
     else:
         explorar(r1, zonas_conocidas1)
 
     if r2.estado == "llevando recurso":
-        r2.llevar_recurso(zonas_conocidas2, recursos,nave)
+        r2.llevar_recurso(zonas_conocidas2, recursos, nave)
     else:
         explorar(r2, zonas_conocidas2)
 
     if r3.estado == "llevando recurso":
-        r3.llevar_recurso(zonas_conocidas3, recursos,nave)
+        r3.llevar_recurso(zonas_conocidas3, recursos, nave)
     else:
         explorar(r3, zonas_conocidas3)
 
@@ -379,7 +379,9 @@ for i in range(len(zonas_conocidas4)):
         r4.indicador2 = i
         break
 
-while r1.estado == "volviendo a la nave" or r2.estado == "volviendo a la nave" or r3.estado == "volviendo a la nave" or r3.estado == "volviendo a la nave":
+status = "volviendo a la nave"
+
+while r1.estado == status or r2.estado == status or r3.estado == status or r4.estado == status:
     print("agente 1 (blanco),   estado: " + r1.estado)
     print("agente 2 (naranja),  estado: " + r2.estado)
     print("agente 3 (verde),    estado: " + r3.estado)
@@ -395,14 +397,14 @@ print("agente 2 (naranja),  estado: " + r2.estado)
 print("agente 3 (verde),    estado: " + r3.estado)
 print("agente 4 (amarillo), estado: " + r4.estado)
 print("nave (azul), unidades: " + str(nave.unidades))
-turtle.title('Recursos encontrados')
+#turtle.title('Recursos encontrados')
 time.sleep(1)
-turtle.title('Despegue en 5')
+#turtle.title('Despegue en 5')
 time.sleep(1)
-turtle.title('Despegue en 4')
+#turtle.title('Despegue en 4')
 time.sleep(1)
-turtle.title('Despegue en 3')
+#turtle.title('Despegue en 3')
 time.sleep(1)
-turtle.title('Despegue en 2')
+#turtle.title('Despegue en 2')
 time.sleep(1)
-turtle.title('Despegue en 1')
+#turtle.title('Despegue en 1')
