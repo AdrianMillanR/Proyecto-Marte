@@ -1,11 +1,11 @@
 import turtle
 import random
 import time
-from Agente import Agente
-from Obstaculo import Obstaculo
-from Recurso import Recurso
-from Zona import Zona
-from Nave import Nave
+from modules.Agente import Agente
+from modules.Obstaculo import Obstaculo
+from modules.Recurso import Recurso
+from modules.Zona import Zona
+from modules.Nave import Nave
 
 # listas para registrar coordenadas que los robots han recorrido, de los obstaculos y de los recursos
 zonas_conocidas1 = []
