@@ -115,7 +115,7 @@ def iniciar_componentes():
     crearobstaculo(-180, -60)
     crearobstaculo(-160, -40)
 
-    #turtle.title('Exploración en Marte')
+    turtle.title('Exploración en Marte')
 
 
 def crearobstaculo(x, y):
